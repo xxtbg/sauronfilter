@@ -1,16 +1,12 @@
-;;;
 ;;; SauronFilter
-;;;
-;;;
 ;;; Copyright (c) 2013 Fundacion Jala
-;;;
 
 [Version]
 Signature   = "$Windows NT$"
-Class       = "ActivityMonitor"             ;This is determined by the work this filter driver does
-ClassGuid   = {b86dff51-a31e-4bac-b3cf-e8cfe75c9fc2}    ;This value is determined by the Class
+Class       = "ActivityMonitor"                        ;This is determined by the work this filter driver does
+ClassGuid   = {b86dff51-a31e-4bac-b3cf-e8cfe75c9fc2}      ;This value is determined by the Class
 Provider    = %Msft%
-DriverVer   = 06/16/2007,1.0.0.0
+DriverVer   = 11/27/2013,0.0.0.1
 CatalogFile = sauronfilter.cat
 
 
@@ -18,9 +14,7 @@ CatalogFile = sauronfilter.cat
 DefaultDestDir          = 12
 SauronFilter.DriverFiles  = 12            ;%windir%\system32\drivers
 
-;;
 ;; Default install sections
-;;
 
 [DefaultInstall]
 OptionDesc  = %ServiceDescription%
@@ -29,9 +23,7 @@ CopyFiles   = SauronFilter.DriverFiles
 [DefaultInstall.Services]
 AddService  = %ServiceName%,,SauronFilter.Service
 
-;;
 ;; Default uninstall sections
-;;
 
 [DefaultUninstall]
 DelFiles   = SauronFilter.DriverFiles
@@ -82,7 +74,7 @@ sauronfilter.sys = 1,,
 
 [Strings]
 Msft                    = "Microsoft Corporation"
-ServiceDescription      = "SauronFilter mini-filter driver"
+ServiceDescription      = "Sauron Filter mini-filter driver"
 ServiceName             = "SauronFilter"
 DriverName              = "SauronFilter"
 DiskId1                 = "SauronFilter Device Installation Disk"

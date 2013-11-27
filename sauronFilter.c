@@ -24,8 +24,6 @@ typedef struct _SAURON_FILTER_DATA {
 /*************************************************************************
     Prototypes for the startup and unload routines used for
     this Filter.
-
-    Implementation in nullFilter.c
 *************************************************************************/
 
 DRIVER_INITIALIZE DriverEntry;
