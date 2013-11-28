@@ -34,12 +34,12 @@ DriverEntry (
     );
 
 NTSTATUS
-NullUnload (
+SauronUnload (
     __in FLT_FILTER_UNLOAD_FLAGS Flags
     );
 
 NTSTATUS
-NullQueryTeardown (
+SauronQueryTeardown (
     __in PCFLT_RELATED_OBJECTS FltObjects,
     __in FLT_INSTANCE_QUERY_TEARDOWN_FLAGS Flags
     );
@@ -52,11 +52,20 @@ SAURON_FILTER_DATA SauronFilterData;
 
 #ifdef ALLOC_PRAGMA
 #pragma alloc_text(INIT, DriverEntry)
-#pragma alloc_text(PAGE, NullUnload)
-#pragma alloc_text(PAGE, NullQueryTeardown)
+#pragma alloc_text(PAGE, SauronUnload)
+#pragma alloc_text(PAGE, SauronQueryTeardown)
 #endif
 
 //  This defines what we want to filter with FltMgr
+CONST FLT_OPERATION_REGISTRATION Callbacks[] = { 
+      {IRP_MJ_CREATE},
+      {IRP_MJ_CLOSE},
+      {IRP_MJ_READ},
+      {IRP_MJ_WRITE},
+      {IRP_MJ_OPERATION_END}
+
+};
+
 
 CONST FLT_REGISTRATION FilterRegistration = {
 
@@ -65,12 +74,12 @@ CONST FLT_REGISTRATION FilterRegistration = {
     0,                                  //  Flags
 
     NULL,                               //  Context
-    NULL,                               //  Operation callbacks
+    Callbacks,                          //  Operation callbacks
 
-    NullUnload,                         //  FilterUnload
+    SauronUnload,                         //  FilterUnload
 
     NULL,                               //  InstanceSetup
-    NullQueryTeardown,                  //  InstanceQueryTeardown
+    SauronQueryTeardown,                  //  InstanceQueryTeardown
     NULL,                               //  InstanceTeardownStart
     NULL,                               //  InstanceTeardownComplete
 
@@ -141,7 +150,7 @@ Return Value:
 }
 
 NTSTATUS
-NullUnload (
+SauronUnload (
     __in FLT_FILTER_UNLOAD_FLAGS Flags
     )
 /*++
@@ -172,8 +181,9 @@ Return Value:
     return STATUS_SUCCESS;
 }
 
+
 NTSTATUS
-NullQueryTeardown (
+SauronQueryTeardown (
     __in PCFLT_RELATED_OBJECTS FltObjects,
     __in FLT_INSTANCE_QUERY_TEARDOWN_FLAGS Flags
     )
@@ -201,8 +211,6 @@ Return Value:
 {
     UNREFERENCED_PARAMETER( FltObjects );
     UNREFERENCED_PARAMETER( Flags );
-
     PAGED_CODE();
-
     return STATUS_SUCCESS;
 }
